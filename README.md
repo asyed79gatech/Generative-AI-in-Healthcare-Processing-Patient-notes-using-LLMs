@@ -4,8 +4,11 @@ In healthcare, accurate and efficient documentation is critical, but it can be a
 The project was inspired by the 2023 Purdue "Data for Good" competition, which aimed to bridge healthcare needs with cutting-edge AI solutions. This system leverages open-source LLMs to process medical conversations and extract the necessary information to populate forms or databases.
 
 ![Masthead](/Patinet_Notes_Processing.png)
+
+
 ## Motivation
 This project showcases the potential of open-source LLMs, prompt engineering, and data pre-processing to automate tasks for healthcare professionals. It gives an insight into imagining a world where healthcare workers and volunteers can focus entirely on patient care, free from the burden of time-consuming paperwork. It was particularly interesting because it is a prime example of how AI simplifies administrative processes, ensuring data accuracy, consistency, and security, while freeing up valuable time and resources.
+
 
 ## Technology Used
 **1- Python:** For data collection, preprocessing, and integration with LLMs.
@@ -32,7 +35,8 @@ This project showcases the potential of open-source LLMs, prompt engineering, an
 
 **4- Hardware:** Used `NVIDIA A100 GPU` purchased through Google Colab subscription to load the model and run the LLM inferencing.
 
-## Dataset
+
+## Dataset Overview
 
 During an appointment, the conversation between the Patinet and Doctor is recorded as patient notes. These notes/ transcripts form a gold mine, however, being raw data, they end up being both challenging and time-consuming to retrieve specific and targeted information from.
 
@@ -48,20 +52,21 @@ The `transcripts.json` file contains a total of 2001 patient notes identified th
 
 ```
 
-For the full dataset, see [transcripts.json](transcripts.json)
+For the full transcriptions, see [transcripts.json](transcripts.json)
 
 In addition to the above `transcripts.json` file, a `test.csv` file was also provided containing tabular form of six structured questions that need to answered for each patient ID corresponding to the ID in the `transcripts.json` file. A glimpse of the csv file is given below:
 
-## Data Overview
+| Id | Transcript | Question |
+|---|------------|----------|
+| 587d0feb-5780-43e1-9595-e19d4b31dc07 | 2055 | What is the patient's name? |
+| 263e8884-e8ba-4266-bb0c-85271419a0b3 | 2055 | What is the patient's age? |
+| 74c68eca-61b2-49d0-9b1c-0f6f886b04ff | 2055 | What is the patient's condition? |
+| 8572ab5d-f20a-4de5-ab44-f42b07e45a00 | 2055 | What symptoms is the patient experiencing? |
+| f5c92075-ef05-4fbf-a7a0-aa86c586ff02 | 2055 | What precautions did the doctor advise? |
+| 03406fb0-e67d-4614-a745-ed02c7ac6c46 | 2055 | What drug did the doctor prescribe? |
 
-Here's a summary of our data:
+For the full csv file, see [test.json](test.csv)
 
-| Name | Age | City |
-|------|-----|------|
-| John | 30  | NYC  |
-| Jane | 25  | LA   |
-
-For the full dataset, see [test.csv](test.csv)
 
 
 

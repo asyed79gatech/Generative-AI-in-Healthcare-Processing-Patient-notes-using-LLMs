@@ -7,7 +7,7 @@ The project was inspired by the 2023 Purdue "Data for Good" competition, which a
 ## Motivation
 This project showcases the potential of open-source LLMs, prompt engineering, and data pre-processing to automate tasks for healthcare professionals. It gives an insight into imagining a world where healthcare workers and volunteers can focus entirely on patient care, free from the burden of time-consuming paperwork. It was particularly interesting because it is a prime example of how AI simplifies administrative processes, ensuring data accuracy, consistency, and security, while freeing up valuable time and resources.
 
-## Technologies Used
+## Technology Used
 **1- Python:** For data collection, preprocessing, and integration with LLMs.
 
 **2- Open-Source LLMs:**
@@ -17,19 +17,20 @@ This project showcases the potential of open-source LLMs, prompt engineering, an
 
 **3- Libraries:**
 
-- pandas and numpy for data manipulation.
+- `pandas` and `numpy` for data manipulation.
 
-- transformers for model integration and creating LLM pipelines.
+- `transformers` for model integration and creating LLM pipelines.
 
-- spacy, NLTK and Regex  for linguistic preprocessing of notes.
+- `spacy`, `NLTK` and `Regex`  for linguistic preprocessing of notes.
 
-- json for managing input/output data formats.
+- `json` for managing input/output data formats.
 
-- langdetect for patient note language translation pipeline
+- `langdetect` for patient note language translation pipeline
 
-- concurrne.futures module of the python's standard library to run LLM inferencing tasks on GPU asynchronously using the ThreadPoolExecutor
+- `concurrent.futures` module of the python's standard library to run LLM inferencing tasks on GPU asynchronously using the `ThreadPoolExecutor`
 
-**4- Hardware:** Used NVIDIA A100 GPU purchased through Google Colab subscription to load the model and run the LLM inferencing.
+
+**4- Hardware:** Used `NVIDIA A100 GPU` purchased through Google Colab subscription to load the model and run the LLM inferencing.
 
 ## Dataset
 
@@ -46,8 +47,7 @@ The transcripts.json file contains a total of 2001 patient notes identified thro
 "291": "During the visit, I examined Tina Will, a 69-year-old patient who presented with symptoms of chest pain, vomiting, and breathlessness. After conducting a thorough examination, I determined that Tina was suffering from a heart attack. As a result, I advised her to seek immediate medical attention. Since there were no precautions that could be taken to prevent a heart attack, I did not prescribe any medication. Instead, I recommended that Tina follow up with her primary care physician for ongoing treatment and management of her condition."}
 
 ```
-
-
+In addition to the above transcripts.json file
 
 ## Methodology
 

@@ -38,7 +38,7 @@ During an appointment, the conversation between the Patinet and Doctor is record
 
 The dataset used in this project was provided by Prediction Guard during the Data 4 Good challenge organized in Fall 2023.
 
-The transcripts.json file contains a total of 2001 patient notes identified through the transcript IDs. The following is an example of how patient notes are contained in the transcripts.json file as json objects.
+The `transcripts.json` file contains a total of 2001 patient notes identified through the transcript IDs. The following is an example of how patient notes are contained in the `transcripts.json` file as json objects.
 
 ```json
 
@@ -47,7 +47,23 @@ The transcripts.json file contains a total of 2001 patient notes identified thro
 "291": "During the visit, I examined Tina Will, a 69-year-old patient who presented with symptoms of chest pain, vomiting, and breathlessness. After conducting a thorough examination, I determined that Tina was suffering from a heart attack. As a result, I advised her to seek immediate medical attention. Since there were no precautions that could be taken to prevent a heart attack, I did not prescribe any medication. Instead, I recommended that Tina follow up with her primary care physician for ongoing treatment and management of her condition."}
 
 ```
-In addition to the above transcripts.json file
+
+For the full dataset, see [transcripts.json](transcripts.json)
+
+In addition to the above `transcripts.json` file, a `test.csv` file was also provided containing tabular form of six structured questions that need to answered for each patient ID corresponding to the ID in the `transcripts.json` file. A glimpse of the csv file is given below:
+
+## Data Overview
+
+Here's a summary of our data:
+
+| Name | Age | City |
+|------|-----|------|
+| John | 30  | NYC  |
+| Jane | 25  | LA   |
+
+For the full dataset, see [test.csv](test.csv)
+
+
 
 ## Methodology
 

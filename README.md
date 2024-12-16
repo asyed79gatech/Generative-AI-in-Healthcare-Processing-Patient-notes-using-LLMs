@@ -10,7 +10,10 @@ This project showcases the potential of open-source LLMs, prompt engineering, an
 ## Technologies Used
 **1- Python:** For data collection, preprocessing, and integration with LLMs.
 
-**2- Open-Source LLMs:** Llama 2, MPT, Falcon, and others for natural language understanding and extraction.
+**2- Open-Source LLMs:**
+- facebook/m2m100_418M for translation of non-enlgish patient notes into english as part of pre-processing
+
+- Mistral-7B-Instruct-v0.3 for extracting structured information from patient note by providing the note in the prompt as context
 
 **3- Libraries:**
 

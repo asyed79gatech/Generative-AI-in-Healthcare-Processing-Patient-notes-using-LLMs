@@ -38,11 +38,22 @@ This project showcases the potential of open-source LLMs, prompt engineering, an
 
 ## Dataset Overview
 
-During an appointment, the conversation between the Patinet and Doctor is recorded as patient notes. These notes/ transcripts form a gold mine, however, being raw data, they end up being both challenging and time-consuming to retrieve specific and targeted information from.
+Patient notes recorded during doctor appointments form a valuable resource for extracting insights. However, due to their raw, unstructured nature, retrieving specific, actionable information can be both challenging and time-consuming.
 
-The dataset used in this project was provided by Prediction Guard during the Data 4 Good challenge organized in Fall 2023.
+This project utilizes a dataset provided by Prediction Guard during the Data 4 Good Challenge (Fall 2023) to address this challenge. 
 
-The `transcripts.json` file contains a total of 2001 patient notes identified through the transcript IDs. The following is an example of how patient notes are contained in the `transcripts.json` file as json objects.
+#### Dataset Description
+
+#### Dataset Overview
+Patient notes recorded during doctor appointments form a valuable resource for extracting insights. However, due to their raw, unstructured nature, retrieving specific, actionable information can be both challenging and time-consuming.
+
+This project utilizes a dataset provided by Prediction Guard during the Data 4 Good Challenge (Fall 2023) to address this challenge.
+
+Dataset Description
+**1. `transcripts.json`**
+Contains 2001 patient notes represented as JSON objects, each identified by a unique transcript ID.
+Example of a patient note:
+
 
 ```json
 
@@ -52,9 +63,11 @@ The `transcripts.json` file contains a total of 2001 patient notes identified th
 
 ```
 
-For the full transcriptions, see [transcripts.json](transcripts.json)
+For the complete file, refer to [transcripts.json](transcripts.json)
 
-In addition to the above `transcripts.json` file, a `test.csv` file was also provided containing tabular form of six structured questions that need to answered for each patient ID corresponding to the ID in the `transcripts.json` file. A glimpse of the csv file is given below:
+**2. `test.csv`**
+A structured tabular dataset with six questions for each patient note identified by its corresponding transcript ID.
+Example rows for Transcript ID: 2055:
 
 | Id | Transcript | Question |
 |---|------------|----------|
@@ -65,7 +78,7 @@ In addition to the above `transcripts.json` file, a `test.csv` file was also pro
 | f5c92075-ef05-4fbf-a7a0-aa86c586ff02 | 2055 | What precautions did the doctor advise? |
 | 03406fb0-e67d-4614-a745-ed02c7ac6c46 | 2055 | What drug did the doctor prescribe? |
 
-For the full csv file, see [test.json](test.csv)
+For the complete file, refer to [test.json](test.csv)
 
 
 

@@ -8,6 +8,34 @@ import nltk
 nltk.download('punkt')
 
 class DataPreprocessor:
+
+    """
+    A class for preprocessing and preparing textual data from transcripts for use in LLM-based projects.
+
+    This class provides methods to load data, prepare context, detect non-English text, translate it to 
+    English, and preprocess the text by cleaning and tokenizing it.
+
+    Attributes:
+        transcript_path (str): Path to the JSON file containing transcripts.
+        test_path (str): Path to the CSV file containing test questions and transcript IDs.
+        context (list): List to store the prepared context data.
+
+    Methods:
+        load_data():
+            Loads the transcript JSON file and test CSV file into memory.
+        
+        prepare_context():
+            Prepares a context list where each entry contains an ID and the corresponding text in a formatted string.
+
+        static detect_and_translate(transcripts):
+            Detects the language of the transcripts and translates non-English text to English.
+            Returns the translated transcripts and indices of non-English entries.
+
+        static preprocess_text_without_lemmatization_stopwords(input_list):
+            Cleans and tokenizes text by removing special characters, extra spaces, and converting it to lowercase.
+            Maintains the ID and reformats the text while processing.
+    
+    """
     def __init__(self, transcript_path, test_path):
         self.transcript_path = transcript_path
         self.test_path = test_path

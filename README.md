@@ -14,9 +14,9 @@ This project showcases the potential of open-source LLMs, prompt engineering, an
 **1- Python:** For data collection, preprocessing, and integration with LLMs.
 
 **2- Open-Source LLMs:**
-- facebook/m2m100_418M for translation of non-enlgish patient notes into english as part of pre-processing
+- `facebook/m2m100_418M` for translation of non-enlgish patient notes into english as part of pre-processing
 
-- Mistral-7B-Instruct-v0.3 for extracting structured information from patient note by providing the note in the prompt as context
+- `Mistral-7B-Instruct-v0.3` for extracting structured information from patient note by providing the note in the prompt as context
 
 **3- Libraries:**
 
@@ -43,8 +43,6 @@ Patient notes recorded during doctor appointments form a valuable resource for e
 This project utilizes a dataset provided by Prediction Guard during the Data 4 Good Challenge (Fall 2023) to address this challenge. 
 
 #### Dataset Description
-
-#### Dataset Overview
 Patient notes recorded during doctor appointments form a valuable resource for extracting insights. However, due to their raw, unstructured nature, retrieving specific, actionable information can be both challenging and time-consuming.
 
 This project utilizes a dataset provided by Prediction Guard during the Data 4 Good Challenge (Fall 2023) to address this challenge.
@@ -80,10 +78,89 @@ Example rows for Transcript ID: 2055:
 
 For the complete file, refer to [test.json](test.csv)
 
+## Objective
+The task is to extract information from relevant patient notes from the `transcripts.json` file using the transcript ID and generate answers to the six questions listed in the `test.csv` file.
 
-
+This project aims to streamline the extraction process and transform unstructured notes into structured, actionable insights using open-source LLMs and robust prompt-engineering.
 
 ## Methodology
+**1- Data Preprocessing**
+
+The `DataPreprocessor` class in teh `data_preprocessing.py` file contains all the relevnat methods used t pre-process the transcripts so that they can provide meaningful context to the LLM and help in answering the six questions about the patient.
+
+All the transcripts in the `transcripts.json` file are first loaded into a python list called `context`
+
+There are some transcriptions in languages other than english. For these, transcriptions, the `detect_and_translate` method in the class translates non-english transcriptions. The method is shown below:
+
+```python
+def detect_and_translate(transcripts):
+    non_english_indices = []
+
+    for i, text in enumerate(transcripts):
+        try:
+            lang = detect(text)
+            if lang != "en":
+                non_english_indices.append(i)
+                translation = translator(text, src_lang=lang, tgt_lang="en")
+                translated_text = translation[0]["translation_text"]
+                transcripts[i] = translated_text
+        except Exception as e:
+            print(f"Error processing transcript {i}: {e}")
+
+    return transcripts, non_english_indices
+```
+An example of the transcript before and after the translation is given below:
+**Before**
+```
+ID: 3538
+Text: D: शुभ प्रभात, थॉमस जी। आज मुझे आपकी कैसे सहायता कर सकते हैं? 
+
+P: शुभ प्रभात, डॉक्टर। मुझे अपने लम्बरों में कमजोरी, चक्कर आना और गले में दर्द के बारे में अनेक दिनों से तक समस्या है। 
+
+D: महसूस हो रहा है, थॉमस जी। आपके लक्षणों और आपकी उम्र के आधार पर, मैं आशा कर रहा हूं कि आपको सर्विकल स्पॉन्डिलोसिस हो सकती है। 
+
+P: यह क्या है, डॉक्टर? 
+
+D: सर्विकल स्पॉन्डिलोसिस एक ऐसा स्थिति है जो आपके गले के हिस्से को प्रभावित करता है, जो आपके गले का हिस्सा है। यह 60 साल से ऊपर के लोगों में आम है और यह आपके गले में दर्द और स्टिफ़नस की वजह से हो सकता है, जैसे ही आपके लम्बरों में कमजोरी और नम्बर्स का महसूस हो सकता है। 
+
+P: ओह, मैं समझ गया। क्या मुझे अच्छे से महसूस करने के लिए
+```
+**After**
+```
+ID: 3538 Text: D: Happy Happiness, Thomas G. How can I help you today? P: Happy Happiness, Doctor. I have a problem for many days about weakness in my limbs, swelling and throat pain. D: Feeling, Thomas G. Depending on your symptoms and your age, I hope you may have generic spondylosis. P: What is it, Doctor? D: Generic spondylosis is a condition that affects the part of your throat, which is part of your throat. It is common in people over 60 years and it can be caused by the pain and stiffiness in your throat, as well as the weakness and weakness in your limbs.
+```
+
+
+After all the transcriptions have been translated to english, the `preprocess_text_without_lemmatization_stopwords` method is used to Clean and tokenize the text by removing special characters, extra spaces, and converting it to lowercase.
+The processed transcriptions maintain the ID and reformats the text while processing. The method is given below:
+
+```python
+def preprocess_text_without_lemmatization_stopwords(input_list):
+    def clean_text(text):
+        text = re.sub(r"[^\w\s]", " ", text)
+        text = re.sub(r"\s+", " ", text)
+        text = re.sub(r"-", "", text)
+        text = text.lower()
+        tokens = word_tokenize(text)
+        return " ".join(tokens)
+
+    processed_list = []
+    for entry in input_list:
+        match = re.match(r"(ID:\s*\d+)\s*Text:\s*(.*)", entry, re.DOTALL)
+        if match:
+            id_part = match.group(1)
+            text_part = match.group(2)
+            clean_text_part = clean_text(text_part)
+            processed_entry = f"{id_part} Text: {clean_text_part}"
+            processed_list.append(processed_entry)
+
+    return processed_list
+```
+
+
+The processed transcripts list now contains all english language tokenized transcriptions, devoid of white spaces, punctuations and special characters.
+
+
 
 ## Setup Instructions
 Follow these steps to run the Project

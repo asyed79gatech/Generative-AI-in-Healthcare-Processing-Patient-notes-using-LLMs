@@ -374,3 +374,22 @@ Generative-AI-in-Healthcare-Processing-Patient-notes-using-LLMs/
 ├── README.md                        # Documentation and usage guide  
 ├── submission.csv                   # Final output file with processed patient notes  
 ```
+
+
+#### Future Enhancements
+
+- Model Generalization: Extend the model to handle additional healthcare documentation tasks.
+
+- Integration with EHR Systems: Enable seamless integration with electronic health record platforms.
+
+- Enhanced Visualization: Add filters and analytics to improve the usability of graph-based visualizations.
+
+- Multilingual Support: Expand functionality to process medical notes in multiple languages.
+
+#### Acknowledgements
+
+Purdue University, Microsoft, INFORMS, and Prediction Guard for organizing the 2023 Purdue "Data for Good" competition and providing the dataset.
+
+Open-Source Community for tools and models that power this project.
+
+Feel free to use and modify this project for your purposes. Contributions are always welcome! 😊

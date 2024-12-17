@@ -318,3 +318,59 @@ Below is an example of the post-processed `test.csv` file:
 
 for the final file, refer to [first_submission.csv](first_submission.csv)
 
+
+## Setup Instructions
+Follow these steps to run the Project
+**1. Clone the Respository**
+```bash
+git clone https://github.com/asyed79gatech/Generative-AI-in-Healthcare-Processing-Patient-notes-using-LLMs.git
+```
+**2. Create virual environment in the folder and activate it**
+```bash
+python3 -m venv venv_name
+```
+- For MacOS
+```bash
+source venv_name/bin/activate
+
+```
+
+- For Windows
+```bash
+source venv_name/bin/activate
+```
+
+**3. Install the necessary packages** 
+```bash
+pip install -r requirements.txt
+
+```
+
+**4. Run the Project**
+The main.py file orchestrates the entire pipeline, running all modules and methods. Update the model_name in the script if a different LLM is to be used. Running the script will generate a submission.csv file in the repository.
+
+**5. Output**
+After running the script, the final output `submission.csv` will be saved in the repository. This file contains the answers for the six questions for each patient note.
+
+
+## Project Structure
+
+
+```graphql
+Generative-AI-in-Healthcare-Processing-Patient-notes-using-LLMs/  
+│  
+├── data/  
+│   ├── transcripts.json             # Input patient notes in JSON format  
+│   ├── test.csv                     # Test file with IDs and questions  
+│  
+├── scripts/  
+│   ├── data_preprocessing.py        # Handles data loading, cleaning, and preparation  
+│   ├── inferencing.py               # Manages LLM inferencing and multithreading  
+│   ├── post_process.py              # Handles the processing of LLM outputs into the required format  
+│   ├── prompt_template.py           # Contains the structured prompts for the LLM  
+│  
+├── main.py                          # Main script to run the entire pipeline  
+├── requirements.txt                 # Dependencies required for the project  
+├── README.md                        # Documentation and usage guide  
+├── submission.csv                   # Final output file with processed patient notes  
+```

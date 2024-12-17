@@ -1,0 +1,8 @@
+tansformers
+torch
+json
+langdetect
+re
+pyspellchecker
+nltk
+spacey

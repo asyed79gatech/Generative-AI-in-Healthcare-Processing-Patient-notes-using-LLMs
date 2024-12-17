@@ -187,6 +187,7 @@ Key Improvements:
 Prompt engineering plays a critical role in extracting structured, specific information from open-source LLMs. For this project, prompts are designed to ensure outputs strictly follow a predefined JSON format. This makes the extracted information easy to parse and aligns directly with the six questions in the `test.csv` file.
 
 **JSON Schema and Rules**
+
 The LLM is instructed to generate responses in the following JSON format:
 
 ```json
@@ -207,6 +208,7 @@ If a key’s value is not mentioned in the text, it should remain an empty strin
 The output must be a JSON object, with no additional text or explanations.
 
 **Few-Shot Prompting**
+
 To enhance LLM performance, few-shot prompting is used. This involves providing the model with a few examples of inputs and expected outputs within the prompt.
 
 Why Use Few-Shot Prompting?
@@ -245,7 +247,8 @@ Including three such examples in the prompt helps the model better understand th
 For the full prompt refer to [prompt_template.py](prompt_template.py)
 
 
-**2- LLM Inferencing**
+**3- LLM Inferencing**
+
 For inference, the Huggingface `transformers` library is used to load the `Mistral-7B-Instruct-v0.3` model, which supports a 32,000-token context window—more than enough for the prompt and patient notes combined. This eliminates the need for creating vector embeddings of the notes.
 
 To efficiently process 2,001 patient notes on `A100 GPUs`, multithreading is implemented using Python's `concurrent.futures` module. The `ThreadPoolExecutor` class handles parallelism by creating a pool of 8 threads to process notes concurrently. Tasks are submitted via the `submit()` method and retrieved with `future.result()` once completed. 
@@ -295,4 +298,23 @@ Example output:
 
 This output is post-processed to populate the corresponding rows in the `test.csv` file. The parallel processing ensures faster and efficient inference for large datasets.
 
+
+**4- Post-Processing**
+
+After LLM inferencing, the generated `JSON` responses are parsed and mapped to their respective rows in the `test.csv` file. A new `.csv` file is created, maintaining the original structure of the `test.csv` file, with the `ID` column containing unique question IDs and the `Text` column populated with the corresponding LLM responses. This final `.csv` file serves as the output.
+
+Below is an example of the post-processed `test.csv` file:
+
+### Example `test.csv` File
+
+| ID                                   | Text                                                                                               |
+|--------------------------------------|----------------------------------------------------------------------------------------------------|
+| 587d0feb-5780-43e1-9595-e19d4b31dc07 | Don Hicks                                                                                         |
+| 263e8884-e8ba-4266-bb0c-85271419a0b3 | 81                                                                                                |
+| 74c68eca-61b2-49d0-9b1c-0f6f886b04ff | Fungal infection                                                                                  |
+| 8572ab5d-f20a-4de5-ab44-f42b07e45a00 | Dischromic patches, nodal skin eruptions, and skin rash                                           |
+| f5c92075-ef05-4fbf-a7a0-aa86c586ff02 | Bathing twice a day, using Dettol or neem in the bathing water, keeping the infected area dry, and using clean cloths |
+| 03406fb0-e67d-4614-a745-ed02c7ac6c46 |                                                                                                    |
+
+for the final file, refer to [first_submission.csv](first_submission.csv)
 

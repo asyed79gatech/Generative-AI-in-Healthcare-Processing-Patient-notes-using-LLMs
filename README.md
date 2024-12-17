@@ -180,31 +180,63 @@ Key Improvements:
 - Processed Transcripts: Consistent formatting, tokenized, cleaned of punctuation, and all in English.
 
 
+**2- Prompt Engineering**
 
-## Setup Instructions
-Follow these steps to run the Project
-**1. Clone the Respository**
+Prompt engineering plays a critical role in extracting structured, specific information from open-source LLMs. For this project, prompts are designed to ensure outputs strictly follow a predefined JSON format. This makes the extracted information easy to parse and aligns directly with the six questions in the `test.csv` file.
 
+**JSON Schema and Rules**
+The LLM is instructed to generate responses in the following JSON format:
 
-**2. Prepare and Launch the Envionment**
+```json
+{
+  "ID": "ID of the patient",
+  "Name": "Name of the patient",
+  "Age": "Age of the patient",
+  "Condition": "Any medical conditions and/or diseases",
+  "Experience": "Patient experiences",
+  "Advice": "Any precautions or advice given to the patient",
+  "Prescription": "Medicines suggested or prescribed by the doctor"
+}
+```
+Rules to Ensure Consistency:
 
-**3. Generate/Update the data**
+All seven keys must be present, even if their values are empty.
+If a key’s value is not mentioned in the text, it should remain an empty string.
+The output must be a JSON object, with no additional text or explanations.
 
-**4. Create an HTTP Port to view the network graph**
+**Few-Shot Prompting**
+To enhance LLM performance, few-shot prompting is used. This involves providing the model with a few examples of inputs and expected outputs within the prompt.
 
-**5. Explore the network**
+Why Use Few-Shot Prompting?
+Few-shot prompting demonstrates the expected output format and response style, guiding the LLM to generate more consistent and accurate results. By including a few examples of patient notes with their corresponding JSON outputs, the LLM learns:
 
-## Project Structure
-```bash
+The correct structure of the response
+- How to extract relevant information
+- How to handle missing or incomplete data
+- Example Prompt with Few-Shot Examples
+Here’s a simplified example of how few-shot prompting is implemented:
+
+**Example - 1**
+*Input*
+```mathematica
+ID: 568  
+Text: D: Good morning, John Doe. I understand you’ve been experiencing some health issues.  
+P: Yes, Doctor, I have headaches and dizziness.  
+D: Based on your labs, you have been diagnosed with hypertension. Regular exercise and a low-salt diet will help manage it. Additionally, I prescribe Amlodipine 5mg daily.  
 
 ```
-## How to Use
+*Output:*
+```json
+{
+  "ID": "568",
+  "Name": "John Doe",
+  "Age": "",
+  "Condition": "Hypertension",
+  "Experience": "Headaches and dizziness",
+  "Advice": "Regular exercise and a low-salt diet",
+  "Prescription": "Amlodipine 5mg daily"
+}
+```
+Including three such examples in the prompt helps the model better understand the task. Few-shot prompting ensures the model generates responses in the desired format while minimizing the need for extensive post-processing.
 
-
-## Future Enhancements
-
-
-## Acknowledgements
-
-
-
+For the full prompt refer to [prompt_template.py](prompt_template.py)

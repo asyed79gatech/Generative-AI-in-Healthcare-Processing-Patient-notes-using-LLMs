@@ -3,7 +3,7 @@ In healthcare, accurate and efficient documentation is critical, but it can be a
 
 The project was inspired by the 2023 Purdue "Data for Good" competition, which aimed to bridge healthcare needs with cutting-edge AI solutions. This system leverages open-source LLMs to process medical conversations and extract the necessary information to populate forms or databases.
 
-![Masthead](/Patinet_Notes_Processing.png)
+![Masthead](/data/Patinet_Notes_Processing.png)
 
 
 ## Motivation
@@ -61,7 +61,7 @@ Example of a patient note:
 
 ```
 
-For the complete file, refer to [transcripts.json](transcripts.json)
+For the complete file, refer to [transcripts.json](/data/transcripts.json)
 
 **2. `test.csv`**
 A structured tabular dataset with six questions for each patient note identified by its corresponding transcript ID.
@@ -76,7 +76,7 @@ Example rows for Transcript ID: 2055:
 | f5c92075-ef05-4fbf-a7a0-aa86c586ff02 | 2055 | What precautions did the doctor advise? |
 | 03406fb0-e67d-4614-a745-ed02c7ac6c46 | 2055 | What drug did the doctor prescribe? |
 
-For the complete file, refer to [test.json](test.csv)
+For the complete file, refer to [test.json](/data/test.csv)
 
 ## Objective
 The task is to extract information from relevant patient notes from the `transcripts.json` file using the transcript ID and generate answers to the six questions listed in the `test.csv` file.
@@ -244,7 +244,7 @@ D: Based on your labs, you have been diagnosed with hypertension. Regular exerci
 ```
 Including three such examples in the prompt helps the model better understand the task. Few-shot prompting ensures the model generates responses in the desired format while minimizing the need for extensive post-processing.
 
-For the full prompt refer to [prompt_template.py](prompt_template.py)
+For the full prompt refer to [prompt_template.py](/scripts/prompt_template.py)
 
 
 **3- LLM Inferencing**

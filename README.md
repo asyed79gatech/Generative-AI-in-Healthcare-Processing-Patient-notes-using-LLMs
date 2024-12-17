@@ -3,7 +3,7 @@ In healthcare, accurate and efficient documentation is critical, but it can be a
 
 The project was inspired by the 2023 Purdue "Data for Good" competition, which aimed to bridge healthcare needs with cutting-edge AI solutions. This system leverages open-source LLMs to process medical conversations and extract the necessary information to populate forms or databases.
 
-![Masthead](/data/Patinet_Notes_Processing.png)
+![Masthead](/images/Patinet_Notes_Processing.png)
 
 
 ## Motivation

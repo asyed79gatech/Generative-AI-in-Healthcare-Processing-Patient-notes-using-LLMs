@@ -86,11 +86,13 @@ This project aims to streamline the extraction process and transform unstructure
 ## Methodology
 **1- Data Preprocessing**
 
-The `DataPreprocessor` class in teh `data_preprocessing.py` file contains all the relevnat methods used t pre-process the transcripts so that they can provide meaningful context to the LLM and help in answering the six questions about the patient.
+The `DataPreprocesso`r class in data_preprocessing.py handles all preprocessing tasks to prepare the transcripts as meaningful context for the LLM. This ensures accurate and efficient answering of the six patient-related questions.
 
-All the transcripts in the `transcripts.json` file are first loaded into a python list called `context`
+**Loading Transcripts**
+All transcripts from `transcripts.json` are loaded into a Python list called `context`.
 
-There are some transcriptions in languages other than english. For these, transcriptions, the `detect_and_translate` method in the class translates non-english transcriptions. The method is shown below:
+**Translating Non-English Transcripts**
+Some transcripts are in languages other than English. These are detected and translated using the `detect_and_translate` method:
 
 ```python
 def detect_and_translate(transcripts):
@@ -110,7 +112,7 @@ def detect_and_translate(transcripts):
     return transcripts, non_english_indices
 ```
 An example of the transcript before and after the translation is given below:
-**Before**
+*Before*
 ```
 ID: 3538
 Text: D: शुभ प्रभात, थॉमस जी। आज मुझे आपकी कैसे सहायता कर सकते हैं? 
@@ -125,14 +127,26 @@ D: सर्विकल स्पॉन्डिलोसिस एक ऐस�
 
 P: ओह, मैं समझ गया। क्या मुझे अच्छे से महसूस करने के लिए
 ```
-**After**
+*After*
 ```
-ID: 3538 Text: D: Happy Happiness, Thomas G. How can I help you today? P: Happy Happiness, Doctor. I have a problem for many days about weakness in my limbs, swelling and throat pain. D: Feeling, Thomas G. Depending on your symptoms and your age, I hope you may have generic spondylosis. P: What is it, Doctor? D: Generic spondylosis is a condition that affects the part of your throat, which is part of your throat. It is common in people over 60 years and it can be caused by the pain and stiffiness in your throat, as well as the weakness and weakness in your limbs.
+ID: 3538 
+
+Text: D: Happy Happiness, Thomas G. How can I help you today? 
+
+P: Happy Happiness, Doctor. I have a problem for many days about weakness in my limbs, swelling and throat pain. 
+
+D: Feeling, Thomas G. Depending on your symptoms and your age, I hope you may have generic spondylosis. 
+
+P: What is it, Doctor? 
+
+D: Generic spondylosis is a condition that affects the part of your throat, which is part of your throat. It is common in people over 60 years and it can be caused by the pain and stiffiness in your throat, as well as the weakness and weakness in your limbs.
 ```
 
+**Cleaning and Tokenizing Transcripts**
+The `preprocess_text_without_lemmatization_stopwords` method cleans and tokenizes the transcripts by:
+Removing special characters and extra spaces
+Converting text to lowercase
 
-After all the transcriptions have been translated to english, the `preprocess_text_without_lemmatization_stopwords` method is used to Clean and tokenize the text by removing special characters, extra spaces, and converting it to lowercase.
-The processed transcriptions maintain the ID and reformats the text while processing. The method is given below:
 
 ```python
 def preprocess_text_without_lemmatization_stopwords(input_list):
@@ -158,7 +172,12 @@ def preprocess_text_without_lemmatization_stopwords(input_list):
 ```
 
 
-The processed transcripts list now contains all english language tokenized transcriptions, devoid of white spaces, punctuations and special characters.
+The result is a cleaned, English-only list of tokenized transcripts ready for analysis.
+
+Key Improvements:
+
+- Original Transcripts: May include non-English text, special characters, and inconsistent formatting.
+- Processed Transcripts: Consistent formatting, tokenized, cleaned of punctuation, and all in English.
 
 
 

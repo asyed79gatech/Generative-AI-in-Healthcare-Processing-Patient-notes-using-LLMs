@@ -86,12 +86,14 @@ This project aims to streamline the extraction process and transform unstructure
 ## Methodology
 **1- Data Preprocessing**
 
-The `DataPreprocesso`r class in data_preprocessing.py handles all preprocessing tasks to prepare the transcripts as meaningful context for the LLM. This ensures accurate and efficient answering of the six patient-related questions.
+The `DataPreprocessor` class in data_preprocessing.py handles all preprocessing tasks to prepare the transcripts as meaningful context for the LLM. This ensures accurate and efficient answering of the six patient-related questions.
 
 **Loading Transcripts**
+
 All transcripts from `transcripts.json` are loaded into a Python list called `context`.
 
 **Translating Non-English Transcripts**
+
 Some transcripts are in languages other than English. These are detected and translated using the `detect_and_translate` method:
 
 ```python
@@ -217,6 +219,7 @@ The correct structure of the response
 Here’s a simplified example of how few-shot prompting is implemented:
 
 **Example - 1**
+
 *Input*
 ```mathematica
 ID: 568  
@@ -240,3 +243,56 @@ D: Based on your labs, you have been diagnosed with hypertension. Regular exerci
 Including three such examples in the prompt helps the model better understand the task. Few-shot prompting ensures the model generates responses in the desired format while minimizing the need for extensive post-processing.
 
 For the full prompt refer to [prompt_template.py](prompt_template.py)
+
+
+**2- LLM Inferencing**
+For inference, the Huggingface `transformers` library is used to load the `Mistral-7B-Instruct-v0.3` model, which supports a 32,000-token context window—more than enough for the prompt and patient notes combined. This eliminates the need for creating vector embeddings of the notes.
+
+To efficiently process 2,001 patient notes on `A100 GPUs`, multithreading is implemented using Python's `concurrent.futures` module. The `ThreadPoolExecutor` class handles parallelism by creating a pool of 8 threads to process notes concurrently. Tasks are submitted via the `submit()` method and retrieved with `future.result()` once completed. 
+
+To speed up the processing of 2001 notes using the `A100` GPUs, the `concurrnt.futures' module is used and multithreading is handled using the ThreadPoolExecutor class. This class allows you to create a pool of threads and execute tasks concurrently.
+
+**Key Methods:**
+
+- `process_single_note(note)`
+Processes one patient note using the LLM, structured prompt, and tokenizer. It generates a JSON response adhering to the required schema.
+Example code:
+
+```python
+def process_single_note(self, note):
+    
+    prompt = generate_strict_prompt_with_schema(note)
+    response = self.llm(prompt, max_length=2000, temperature=0.7, top_p=0.9, pad_token_id=self.tokenizer.pad_token_id)
+    generated_text = response[0]["generated_text"]
+    extracted_json = generated_text[len(prompt):].strip()
+    return extracted_json
+```
+
+- `process_patient_notes(context, max_workers=8)`
+Processes all notes in parallel, returning a list of dictionaries containing answers to the six questions in `test.csv`.
+Example output:
+
+```python
+[{
+      "ID": "291",
+      "Name": "Tina Will",
+      "Age": "69",
+      "Condition": "Heart attack",
+      "Experience": "Chest pain, vomiting, and breathlessness",
+      "Advice": "Seek immediate medical attention",
+      "Prescription": ""
+    }
+{
+      "ID": "3538",
+      "Name": "Thomas",
+      "Age": "",
+      "Condition": "Sarvical Spondylosis",
+      "Experience": "Dizziness, neck pain, and pain in the neck",
+      "Advice": "",
+      "Prescription": ""
+    }]
+```
+
+This output is post-processed to populate the corresponding rows in the `test.csv` file. The parallel processing ensures faster and efficient inference for large datasets.
+
+
